@@ -20,9 +20,9 @@ function beep(freq, dur, vol = 0.4) {
   osc.stop(c.currentTime + dur);
 }
 
-const tick    = () => beep(550,  0.04, 0.12);  // quiet per-second tick
-const pip     = () => beep(880,  0.14, 0.55);  // warning pip at T-5..T-1
-const longPip = () => beep(1100, 0.75, 0.70);  // end signal
+const tick    = () => beep(550,  0.04, 0.05);
+const pip     = () => beep(880,  0.14, 0.05);
+const longPip = () => beep(1100, 0.75, 0.05);
 
 // ── State ────────────────────────────────────────────────────────────────────
 
@@ -175,9 +175,26 @@ function reset() {
   statusMsg.className       = '';
 }
 
+// ── Persistence ───────────────────────────────────────────────────────────────
+
+function savePrefs() {
+  localStorage.setItem('timeit-duration', durationEl.value);
+  localStorage.setItem('timeit-reps',     repsEl.value);
+}
+
+function loadPrefs() {
+  const d = localStorage.getItem('timeit-duration');
+  const r = localStorage.getItem('timeit-reps');
+  if (d) durationEl.value = d;
+  if (r) repsEl.value     = r;
+  display.textContent = fmt(Math.max(1, parseInt(durationEl.value, 10) || 30));
+}
+
+loadPrefs();
+
 // ── Events ────────────────────────────────────────────────────────────────────
 
-startBtn.addEventListener('click', startTimer);
+startBtn.addEventListener('click', () => { savePrefs(); startTimer(); });
 pauseBtn.addEventListener('click', togglePause);
 stopBtn.addEventListener('click',  reset);
 
