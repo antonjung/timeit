@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>TimeIt</title>
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#0f0f23">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TimeIt">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app">
+    <header>
+      <h1>TimeIt</h1>
+    </header>
+
+    <main>
+      <section id="setupPanel" class="panel">
+        <div class="field">
+          <label for="duration">Duration</label>
+          <div class="input-row">
+            <input type="number" id="duration" value="30" min="1" max="3600" inputmode="numeric">
+            <span class="unit">sec</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="reps">Repeat</label>
+          <div class="input-row">
+            <input type="number" id="reps" value="1" min="1" max="99" inputmode="numeric">
+            <span class="unit">×</span>
+          </div>
+        </div>
+        <button id="startBtn" class="btn btn-start">Start</button>
+      </section>
+
+      <section id="timerPanel" class="panel hidden">
+        <div id="repBadge" class="rep-badge hidden">
+          Rep <span id="currentRep">1</span> / <span id="totalReps">1</span>
+        </div>
+        <div id="timerRing">
+          <svg viewBox="0 0 200 200" aria-hidden="true">
+            <circle class="ring-bg" cx="100" cy="100" r="90"/>
+            <circle id="ringProgress" class="ring-progress" cx="100" cy="100" r="90"
+              stroke-dasharray="565.49" stroke-dashoffset="0"/>
+          </svg>
+          <div id="timerDisplay" aria-live="polite">0:30</div>
+        </div>
+        <div id="statusMsg" aria-live="assertive"></div>
+        <div class="controls">
+          <button id="pauseBtn" class="btn btn-pause">Pause</button>
+          <button id="stopBtn" class="btn btn-stop">Stop</button>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
