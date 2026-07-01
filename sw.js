@@ -1,4 +1,4 @@
-const CACHE   = 'timeit-v1';
+const CACHE   = 'timeit-v1.0';
 const ASSETS  = [
   './',
   './index.html',

@@ -43,6 +43,13 @@ h1 {
   color: var(--accent);
 }
 
+#version {
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
 main {
   flex: 1;
   display: flex;
