@@ -24,6 +24,32 @@ const tick    = () => beep(550,  0.04, 0.05);
 const pip     = () => beep(880,  0.14, 0.05);
 const longPip = () => beep(1100, 0.75, 0.05);
 
+// ── Wake Lock ─────────────────────────────────────────────────────────────────
+// Keeps the screen from auto-locking (e.g. iPhone's 5-min timeout) while a rep is running.
+
+let wakeLock = null;
+
+async function acquireWakeLock() {
+  if (!('wakeLock' in navigator)) return;
+  try {
+    wakeLock = await navigator.wakeLock.request('screen');
+    wakeLock.addEventListener('release', () => { wakeLock = null; });
+  } catch (err) {
+    wakeLock = null;
+  }
+}
+
+function releaseWakeLock() {
+  if (wakeLock) wakeLock.release();
+  wakeLock = null;
+}
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && intervalId !== null) {
+    acquireWakeLock();
+  }
+});
+
 // ── State ────────────────────────────────────────────────────────────────────
 
 let totalDuration = 30;
@@ -149,6 +175,7 @@ function startTimer() {
   // Resume audio context if suspended (some browsers require this)
   if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
 
+  acquireWakeLock();
   beginRep();
 }
 
@@ -163,6 +190,7 @@ function reset() {
   intervalId = null;
   paused     = false;
   pauseBtn.textContent = 'Pause';
+  releaseWakeLock();
 
   timerPanel.classList.add('hidden');
   setupPanel.classList.remove('hidden');

@@ -120,7 +120,15 @@ main {
 
 .btn:active { transform: scale(0.96); }
 
-.btn-start { background: var(--accent); color: #0a0a1a; margin-top: 8px; }
+.btn-start {
+  background: var(--accent);
+  color: #0a0a1a;
+  margin-top: 28px;
+  padding: 34px;
+  font-size: 1.6rem;
+  border-radius: 24px;
+  box-shadow: 0 8px 24px rgba(74, 158, 255, 0.35);
+}
 .btn-pause { background: var(--surface); color: var(--text); flex: 1; }
 .btn-stop  { background: rgba(255,80,80,0.12); color: #ff7070; border: 1px solid rgba(255,80,80,0.25); flex: 1; }
 
